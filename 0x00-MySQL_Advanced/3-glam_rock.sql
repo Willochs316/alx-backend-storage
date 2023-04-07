@@ -1,11 +1,4 @@
+-- 3. Old school band
 -- script that lists all bands with Glam rock as their main style
-SELECT
-  b.name AS band_name,
-  EXTRACT(YEAR FROM NOW()) - CAST(SUBSTRING_INDEX(b.formed, '-', 1) AS UNSIGNED) AS lifespan
-FROM
-  bands b
-  JOIN styles s ON b.style_id = s.id
-WHERE
-  s.name = 'Glam rock'
-ORDER BY
-  lifespan DESC;
+SELECT DISTINCT `band_name`, IFNULL(`split`, 2020) - `formed` as `lifespan`
+FROM `metal_bands` WHERE FIND_IN_SET('Glam rock', style) ORDER BY `lifespan` DESC;
